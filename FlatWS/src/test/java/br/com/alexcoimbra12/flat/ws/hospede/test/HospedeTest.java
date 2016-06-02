@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.alexcoimbra12.flat.ws.dao.HospedeDAO;
+import br.com.alexcoimbra12.flat.ws.exception.ListException;
 import br.com.alexcoimbra12.flat.ws.model.Hospede;
 import br.com.alexcoimbra12.flat.ws.resources.HospedeWS;
 
@@ -38,7 +39,7 @@ public class HospedeTest {
 	}
 	
 	@Test
-	public void buscarHospede(){
+	public void buscarHospede() throws ListException{
 		HospedeWS hospedeWS = new HospedeWS();
 		List<Hospede> hospedeList = new ArrayList<Hospede>();
 		hospedeList = hospedeWS.findAll();

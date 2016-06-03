@@ -8,17 +8,19 @@ import br.com.alexcoimbra12.flat.ws.model.Hospede;
 
 public class HospedeController {
 	
-	public List<Hospede> findAll() throws ListException {
-		return HospedeDAO.getInstance().findAll();
-	}
-	public void persistHospede(Hospede hospede){
-		HospedeDAO.getInstance().persist(hospede);
+	public int persistHospede(Hospede hospede){
+		return HospedeDAO.getInstance().persist(hospede);
 	}
 	public List<Hospede> findByName(String nome) throws ListException{
 		return HospedeDAO.getInstance().findByName(nome);
 	}
 	public int removeById(int id){
 		return HospedeDAO.getInstance().removeById(id);
-		
+	}
+	public int editHospede(Hospede hospede) {
+		return HospedeDAO.getInstance().merge(hospede);
+	}
+	public Hospede getById(int id) throws ListException{
+		return HospedeDAO.getInstance().getById(id);
 	}
 }

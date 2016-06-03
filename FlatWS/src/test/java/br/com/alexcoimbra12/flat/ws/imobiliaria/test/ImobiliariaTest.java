@@ -1,22 +1,29 @@
 package br.com.alexcoimbra12.flat.ws.imobiliaria.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.alexcoimbra12.flat.ws.dao.ImobiliariaDAO;
+import br.com.alexcoimbra12.flat.ws.exception.ListException;
 import br.com.alexcoimbra12.flat.ws.model.Imobiliaria;
 import br.com.alexcoimbra12.flat.ws.resources.ImobiliariaWS;
+import br.com.alexcoimbra12.flat.ws.util.ResultMessage;
 
 public class ImobiliariaTest {
 
 
 	public static Imobiliaria imobiliaria = new Imobiliaria();
 	private static Imobiliaria imobiliaria2 = new Imobiliaria();
+	
+	private ImobiliariaWS imobiliariaWS;
 	
 	@BeforeClass
 	public static void setup() {
@@ -34,22 +41,46 @@ public class ImobiliariaTest {
 		imobiliaria2.setTelContato("55555555");
 	}
 	
+	@Before
+	public void before(){
+		imobiliariaWS = new ImobiliariaWS();
+	}
+	
+	
 	@Test
-	public void salvaImobiliaria(){
-		
-		ImobiliariaDAO.getInstance().persist(imobiliaria);
-		ImobiliariaDAO.getInstance().persist(imobiliaria2);
-		
-		assertTrue(true);
+	public void salvarImobiliaria(){
+		ResultMessage message = imobiliariaWS.persistImobiliaria(imobiliaria);
+		ResultMessage message2 = imobiliariaWS.persistImobiliaria(imobiliaria2);
+		assertEquals("success", message.getResultMessage());
+		assertEquals("success", message2.getResultMessage());
 	}
 	
 	@Test
-	public void listImobiliaria(){
-		ImobiliariaWS imobiliariaWS = new ImobiliariaWS();
-		List<Imobiliaria> imobiliariaList = new ArrayList<Imobiliaria>();
-		imobiliariaList = imobiliariaWS.findAll();
-		System.out.println(imobiliariaList.toString());
+	public void editarImobiliaria() throws ListException {
 		
-		assertTrue(true);
+		Imobiliaria imobiliaria = new Imobiliaria();
+		imobiliaria = ImobiliariaDAO.getInstance().getById(1);
+		imobiliaria.setNome("Imobiliaria TESTE EDITAR");
+		ResultMessage message = imobiliariaWS.editImobiliaria(imobiliaria);
+		
+		assertEquals("success", message.getResultMessage());
+	}
+	
+	@Test
+	public void deletarImobiliaria() {
+		ResultMessage message = imobiliariaWS.removeById(2);
+		assertEquals("success", message.getResultMessage());
+	}
+	
+	@Test
+	public void findByName() throws ListException{
+		List<Imobiliaria> imobiliariaList = new ArrayList<Imobiliaria>();
+		imobiliariaList = imobiliariaWS.findByName("a");
+		assertFalse(imobiliariaList.isEmpty());
+	}
+	
+	@After
+	public void teardown() {
+		imobiliariaWS = null;
 	}
 }

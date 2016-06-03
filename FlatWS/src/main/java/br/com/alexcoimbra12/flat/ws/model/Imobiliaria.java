@@ -14,7 +14,7 @@ public class Imobiliaria {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column
-	private Integer id;
+	private int id;
 	@Column
 	private String nome;
 	@Column
@@ -64,6 +64,10 @@ public class Imobiliaria {
 
 	public void setNumCreci(String numCreci) {
 		this.numCreci = numCreci;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	@Override

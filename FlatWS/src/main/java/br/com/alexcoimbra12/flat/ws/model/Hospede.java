@@ -14,7 +14,7 @@ public class Hospede {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
-	private Integer id;
+	private int id;
 
 	@Column
 	private String nome;
@@ -49,7 +49,7 @@ public class Hospede {
 		this.telefone = telefone;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 

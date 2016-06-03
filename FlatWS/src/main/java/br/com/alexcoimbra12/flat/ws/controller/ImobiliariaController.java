@@ -8,10 +8,19 @@ import br.com.alexcoimbra12.flat.ws.model.Imobiliaria;
 
 public class ImobiliariaController {
 	
-	public List<Imobiliaria> findAll(){
-		return ImobiliariaDAO.getInstance().findAll();
+	public int persistImobiliaria(Imobiliaria imobiliaria){
+		return ImobiliariaDAO.getInstance().persist(imobiliaria);
 	}
 	public List<Imobiliaria> findByName(String nome) throws ListException{
 		return ImobiliariaDAO.getInstance().findByName(nome);
+	}
+	public int removeById(int id){
+		return ImobiliariaDAO.getInstance().removeById(id);
+	}
+	public int editImobiliaria(Imobiliaria imobiliaria) {
+		return ImobiliariaDAO.getInstance().merge(imobiliaria);
+	}
+	public Imobiliaria getById(int id) throws ListException{
+		return ImobiliariaDAO.getInstance().getById(id);
 	}
 }

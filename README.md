@@ -20,6 +20,8 @@ Depois de realizar o download do projeto é necessário realizar as seguintes et
 			<DefaultRolloverStrategy max="10" />
 		</RollingFile>
 		
+3. Adicionar o Junit 4 ao build path do projeto.
+		
 Realizado as configurações acima, é só rodar o projeto e testar as requisições.
 
 O Web Service ainda está em desenvolvimento, assim como o front-end, que pode ser encontrado em:  https://github.com/alexcoimbra12/ControleDeFlatFrontEnd

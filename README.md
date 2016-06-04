@@ -3,7 +3,8 @@
 Depois de realizar o download do projeto é necessário realizar as seguintes etapas:
   1. Configurar um schema no banco de dados MySQL com o nome flatws
     Ex: Create database flatws;
-  2. Configurar o arquivo log4j.xml, localizado na pasta resource. Alterando o local onde os arquivos de logs serão gravados.
+  2. Adicionar o Junit ao build path do projeto.
+  3. Configurar o arquivo log4j.xml, localizado na pasta resource. Alterando o local onde os arquivos de logs serão gravados.
     Alterar todos os campos onde estiver a anotação <!-- Configure o local para Salvar o Log -->, conforme exemplo abaixo: 
 
 		<RollingFile name="ROLLING"
@@ -20,7 +21,6 @@ Depois de realizar o download do projeto é necessário realizar as seguintes et
 			<DefaultRolloverStrategy max="10" />
 		</RollingFile>
 		
-3. Adicionar o Junit 4 ao build path do projeto.
 		
 Realizado as configurações acima, é só rodar o projeto e testar as requisições.
 

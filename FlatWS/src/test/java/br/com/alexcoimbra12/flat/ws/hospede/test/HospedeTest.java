@@ -1,27 +1,48 @@
 package br.com.alexcoimbra12.flat.ws.hospede.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import br.com.alexcoimbra12.flat.ws.dao.HospedeDAO;
+import br.com.alexcoimbra12.flat.ws.exception.HospedeNullException;
 import br.com.alexcoimbra12.flat.ws.exception.ListException;
 import br.com.alexcoimbra12.flat.ws.model.Hospede;
 import br.com.alexcoimbra12.flat.ws.resources.HospedeWS;
 import br.com.alexcoimbra12.flat.ws.util.ResultMessage;
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"/spring-contextTest.xml"})
 public class HospedeTest {
+	
+	@Autowired
+	private HospedeDAO dao;
+	
+	@Autowired
+	private HospedeWS hospedeWS;
+	
+	private Logger log = LogManager.getLogger(HospedeTest.class);
+	
+	@Rule
+	public TestName test = new TestName();
 
 	private static Hospede hospede = new Hospede();
 	private static Hospede hospede2 = new Hospede();
 	
-	private HospedeWS hospedeWS;
 	
 	@BeforeClass
 	public static void setup(){
@@ -36,7 +57,8 @@ public class HospedeTest {
 	
 	@Before
 	public void before(){
-		hospedeWS = new HospedeWS();
+		log.debug(String.format("Iniciando teste [%s]", test.getMethodName()));
+
 	}
 	
 	
@@ -49,9 +71,9 @@ public class HospedeTest {
 	}
 	
 	@Test
-	public void editarHospede() throws ListException {
+	public void editarHospede() throws HospedeNullException {
 		Hospede hospede = new Hospede();
-		hospede = HospedeDAO.getInstance().getById(18);
+		hospede = dao.getById(18);
 		hospede.setCpf("11111111111");
 		ResultMessage message = hospedeWS.editHospede(hospede);
 		
@@ -73,6 +95,6 @@ public class HospedeTest {
 	
 	@After
 	public void teardown() {
-		hospedeWS = null;
+		log.debug(String.format("Finalizando teste [%s]", test.getMethodName()));
 	}
 }

@@ -10,8 +10,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.alexcoimbra12.flat.ws.dao.ImobiliariaDAO;
+import br.com.alexcoimbra12.flat.ws.dao.impl.ImobiliariaDAOImpl;
+import br.com.alexcoimbra12.flat.ws.exception.ImobiliariaNullException;
 import br.com.alexcoimbra12.flat.ws.exception.ListException;
 import br.com.alexcoimbra12.flat.ws.model.Imobiliaria;
 import br.com.alexcoimbra12.flat.ws.resources.ImobiliariaWS;
@@ -19,7 +21,9 @@ import br.com.alexcoimbra12.flat.ws.util.ResultMessage;
 
 public class ImobiliariaTest {
 
-
+	@Autowired
+	private ImobiliariaDAOImpl dao;
+	
 	public static Imobiliaria imobiliaria = new Imobiliaria();
 	private static Imobiliaria imobiliaria2 = new Imobiliaria();
 	
@@ -56,10 +60,10 @@ public class ImobiliariaTest {
 	}
 	
 	@Test
-	public void editarImobiliaria() throws ListException {
+	public void editarImobiliaria() throws ImobiliariaNullException {
 		
 		Imobiliaria imobiliaria = new Imobiliaria();
-		imobiliaria = ImobiliariaDAO.getInstance().getById(1);
+		imobiliaria = dao.getById(1);
 		imobiliaria.setNome("Imobiliaria TESTE EDITAR");
 		ResultMessage message = imobiliariaWS.editImobiliaria(imobiliaria);
 		

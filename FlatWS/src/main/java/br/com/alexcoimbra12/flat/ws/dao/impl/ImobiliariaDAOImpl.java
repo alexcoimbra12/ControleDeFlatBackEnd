@@ -1,6 +1,5 @@
 package br.com.alexcoimbra12.flat.ws.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,7 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.alexcoimbra12.flat.ws.dao.ImobiliariaDAO;
@@ -16,7 +15,7 @@ import br.com.alexcoimbra12.flat.ws.exception.ImobiliariaNullException;
 import br.com.alexcoimbra12.flat.ws.exception.ListException;
 import br.com.alexcoimbra12.flat.ws.model.Imobiliaria;
 
-@Service
+@Repository
 public class ImobiliariaDAOImpl implements ImobiliariaDAO{
 	
 	@PersistenceContext
@@ -25,10 +24,10 @@ public class ImobiliariaDAOImpl implements ImobiliariaDAO{
 	private Logger log = LogManager.getLogger(ImobiliariaDAOImpl.class);
 
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<Imobiliaria> findAll() throws ListException {
-		log.info("Recuperando todos os Imobiliarias");
-		List<Imobiliaria> imobiliariaList = new ArrayList<Imobiliaria>();
-		imobiliariaList = entityManager.createQuery("FROM " + Imobiliaria.class.getName()).getResultList();
+		log.info("Recuperando todas as Imobiliarias");
+		List<Imobiliaria> imobiliariaList = entityManager.createQuery("FROM " + Imobiliaria.class.getName()).getResultList();
 
 		if (imobiliariaList == null) {
 			log.error("Erro ao recuperar lista de Imobiliarias, lista é " + imobiliariaList);
@@ -54,29 +53,24 @@ public class ImobiliariaDAOImpl implements ImobiliariaDAO{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Imobiliaria> findByName(String nome) throws ListException {
-		List<Imobiliaria> imobiliariaList = new ArrayList<Imobiliaria>();
-		log.info("Verificando se foi informando nome para realizar busca por nome");
-		if (nome == null || nome.equals("")) {
-			log.info("Nome está vazio Chamando Metodo para retornar todos os Imobiliarias");
-			return findAll();
-		} else {
-			imobiliariaList = entityManager.createQuery("SELECT c FROM Imobiliaria c WHERE c.nome LIKE :nome").setParameter("nome", "%" + nome + "%").getResultList();
+		
+		List<Imobiliaria> imobiliariaList = entityManager.createQuery("SELECT c FROM Imobiliaria c WHERE c.nome LIKE :nome").setParameter("nome", "%" + nome + "%").getResultList();
 
-			if (imobiliariaList == null || imobiliariaList.isEmpty()) {
+			if (imobiliariaList == null) {
 				log.error("Erro ao recuperar lista de Imobiliarias com o nome: " + nome);
 				throw new ListException("Erro ao recuperar lista de Imobiliarias com o nome: " + nome);
 			} else {
 				log.debug("Retornado Imobiliarias com o nome " + nome + " " + imobiliariaList.toString());
 				return imobiliariaList;
 			}
-		}
 	}
+
 	@Override
-	@Transactional
 	public Imobiliaria getById(final int id) throws ImobiliariaNullException {
+		
 		log.info("Recuperando Imobiliaria com id " + id);
-		Imobiliaria imobiliaria = new Imobiliaria();
-		imobiliaria = entityManager.find(Imobiliaria.class, id);
+		Imobiliaria imobiliaria = entityManager.find(Imobiliaria.class, id);
+		
 		if (imobiliaria == null) {
 			log.error("Imobiliaria com o ID: " + id + " não encontrado, id não existe no banco");
 			throw new ImobiliariaNullException("Imobiliaria com o ID: " + id + " não encontrada, id não existe no banco");
@@ -86,6 +80,7 @@ public class ImobiliariaDAOImpl implements ImobiliariaDAO{
 	@Override
 	@Transactional
 	public int merge(Imobiliaria imobiliaria) {
+		
 		try {
 			log.info("Realizando a operação de merge do Imobiliaria");
 			entityManager.merge(imobiliaria);
@@ -93,7 +88,6 @@ public class ImobiliariaDAOImpl implements ImobiliariaDAO{
 			return 1;
 		} catch (Exception e) {
 			log.error("Erro ao realizar o merge Imobiliaria no banco " + e);
-			entityManager.getTransaction().rollback();
 			return 0;
 		}
 	}
@@ -103,10 +97,9 @@ public class ImobiliariaDAOImpl implements ImobiliariaDAO{
 	
 		try {
 			log.info("Realizando a operação para deletar o Imobiliaria");
-			log.info("Recuperando Imobiliaria com o id " + id + " para deletar");
 			Imobiliaria imobiliaria = getById(id);
 			entityManager.remove(imobiliaria);
-			log.info("Operação realizada");
+			log.info("Operação realizada, Imobiliaria com id " + id + " removida");
 			return 1;
 		} catch (Exception e) {
 			log.error("Erro ao deletar Imobiliaria no banco " + e);

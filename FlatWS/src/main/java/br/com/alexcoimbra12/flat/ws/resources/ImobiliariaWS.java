@@ -1,6 +1,5 @@
 package br.com.alexcoimbra12.flat.ws.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alexcoimbra12.flat.ws.constants.WSConstants;
-import br.com.alexcoimbra12.flat.ws.dao.impl.ImobiliariaDAOImpl;
+import br.com.alexcoimbra12.flat.ws.dao.ImobiliariaDAO;
 import br.com.alexcoimbra12.flat.ws.exception.ImobiliariaNullException;
 import br.com.alexcoimbra12.flat.ws.exception.ListException;
 import br.com.alexcoimbra12.flat.ws.model.Imobiliaria;
@@ -24,7 +23,7 @@ import br.com.alexcoimbra12.flat.ws.util.ResultMessage;
 public class ImobiliariaWS {
 	
 	@Autowired
-	private ImobiliariaDAOImpl dao;
+	private ImobiliariaDAO dao;
 	
 	private ResultMessage resultMessage = new ResultMessage();
 	
@@ -32,16 +31,23 @@ public class ImobiliariaWS {
 
 	@RequestMapping(value = WSConstants.GET_NAME, method = RequestMethod.GET, produces = WSConstants.PRODUCES_JSON)
 	public List<Imobiliaria> findByName(@PathVariable(value = WSConstants.VARIABLE_NAME) String nome) throws ListException {
+		
 		log.info("Procurando Lista de Imobiliarias");
-		List<Imobiliaria> imobiliariaList = new ArrayList<Imobiliaria>();
-		imobiliariaList = dao.findByName(nome);
+		List<Imobiliaria> imobiliariaList = dao.findByName(nome);
 		log.info("Retornando lista de Imobiliarias Encontrados");
 		return imobiliariaList;
 	}
+	
+	@RequestMapping(value = WSConstants.GET_ALL, method = RequestMethod.GET, produces = WSConstants.PRODUCES_JSON)
+	public List<Imobiliaria> findAll() throws ListException{
+		return dao.findAll();
+	}
+	
 
 	@RequestMapping(value = WSConstants.POST_SAVE, method = RequestMethod.POST, produces = WSConstants.PRODUCES_JSON)
 	public ResultMessage persistImobiliaria(@RequestBody Imobiliaria imobiliaria) {
-		log.info("Salvando novo Imobiliaria " + imobiliaria.toString());
+		
+		log.info("Salvando nova Imobiliaria " + imobiliaria.toString());
 		int result = dao.persist(imobiliaria);
 
 		if (result == 1) {
@@ -55,14 +61,14 @@ public class ImobiliariaWS {
 
 	@RequestMapping(value = WSConstants.PUT_MERGE, method = RequestMethod.PUT, produces = WSConstants.PRODUCES_JSON)
 	public ResultMessage editImobiliaria(@RequestBody Imobiliaria imobiliaria) throws ImobiliariaNullException {
-		log.info("Editando Usuário");
+		
+		log.info("Editando Usuário com id " + imobiliaria.getId());
 		Imobiliaria imobiliaria2 = new Imobiliaria();
-		log.info("Verificando o id do Imobiliaria");
+
 		if(imobiliaria.getId() == 0){
 			log.error("Id inválido \n id informado é " + imobiliaria.getId());
 			resultMessage.setResultMessage(WSConstants.FAILURE_RESULT);
 		} else {
-			log.info("Recuperando Imobiliaria com o id " + imobiliaria.getId());
 			imobiliaria2 = dao.getById(imobiliaria.getId());
 			imobiliaria2.setNome(imobiliaria.getNome());
 			imobiliaria2.setEndereco(imobiliaria.getEndereco());
@@ -84,8 +90,8 @@ public class ImobiliariaWS {
 
 	@RequestMapping(value = WSConstants.DELETE_ID, method = RequestMethod.DELETE, produces = WSConstants.PRODUCES_JSON)
 	public ResultMessage removeById(@PathVariable(value = WSConstants.VARIABLE_ID) Integer id) {
-		log.info("Removendo Imobiliaria \n"
-				+ "Verificando o id do Imobiliaria");
+		
+		log.info("Removendo Imobiliaria com id " + id);
 		if(id == 0){
 			log.error("Id inválido \n id informado é " + id);
 			resultMessage.setResultMessage(WSConstants.FAILURE_RESULT);

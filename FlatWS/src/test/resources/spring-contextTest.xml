@@ -16,11 +16,9 @@
 	<mvc:resources location="/webjars/" mapping="**" />
 	<context:component-scan base-package="br.com.alexcoimbra12.flat.ws.resources" />
 	<context:component-scan base-package="br.com.alexcoimbra12.flat.ws.dao" />
-	<mvc:annotation-driven
-		content-negotiation-manager="contentNegotiationManager" />
+	<mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" />
 	<tx:annotation-driven/>
-	<bean id="contentNegotiationManager"
-		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 		<property name="favorPathExtension" value="false" />
 	</bean>
 
@@ -31,8 +29,7 @@
 		<property name="password" value="admin" />
 	</bean>
 
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="mysqlDataSource" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
@@ -41,12 +38,6 @@
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-	
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/" />
-		<property name="suffix" value=".jsp" />
 	</bean>
 
 </beans>

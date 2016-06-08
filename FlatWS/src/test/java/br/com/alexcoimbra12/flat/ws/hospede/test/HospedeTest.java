@@ -82,7 +82,7 @@ public class HospedeTest {
 	
 	@Test
 	public void deletarHospede() {
-		ResultMessage message = hospedeWS.removeById(19);
+		ResultMessage message = hospedeWS.removeById(30);
 		assertEquals("success", message.getResultMessage());
 	}
 	

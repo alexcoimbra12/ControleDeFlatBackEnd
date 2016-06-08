@@ -18,4 +18,6 @@ public interface ImobiliariaDAO {
 
 	int removeById(final int id);
 
+	List<Imobiliaria> findAll() throws ListException;
+
 }

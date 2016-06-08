@@ -18,4 +18,6 @@ public interface HospedeDAO {
 
 	int removeById(final int id);
 
+	List<Hospede> findAll() throws ListException;
+
 }

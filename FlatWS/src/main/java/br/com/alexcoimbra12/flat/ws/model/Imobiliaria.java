@@ -10,20 +10,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement(name = "imobiliaria")
 public class Imobiliaria {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
 	private int id;
 	@Column
 	private String nome;
 	@Column
 	private String endereco;
-	@Column
+	@Column(name = "tel_contato")
 	private String telContato;
-	@Column
+	@Column(name = "nome_corretor")
 	private String nomeCorretor;
-	@Column
+	@Column(name = "num_creci")
 	private String numCreci;
 
 	public String getNome() {
@@ -75,6 +75,5 @@ public class Imobiliaria {
 		return "Imobiliaria [id=" + id + ", nome=" + nome + ", endereco=" + endereco + ", telContato=" + telContato
 				+ ", nomeCorretor=" + nomeCorretor + ", numCreci=" + numCreci + "]";
 	}
-	
-	
+
 }

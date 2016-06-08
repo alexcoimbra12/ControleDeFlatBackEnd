@@ -6,28 +6,45 @@ import static org.junit.Assert.assertFalse;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import br.com.alexcoimbra12.flat.ws.dao.impl.ImobiliariaDAOImpl;
+import br.com.alexcoimbra12.flat.ws.dao.ImobiliariaDAO;
 import br.com.alexcoimbra12.flat.ws.exception.ImobiliariaNullException;
 import br.com.alexcoimbra12.flat.ws.exception.ListException;
 import br.com.alexcoimbra12.flat.ws.model.Imobiliaria;
 import br.com.alexcoimbra12.flat.ws.resources.ImobiliariaWS;
 import br.com.alexcoimbra12.flat.ws.util.ResultMessage;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"/spring-contextTest.xml"})
 public class ImobiliariaTest {
 
 	@Autowired
-	private ImobiliariaDAOImpl dao;
+	private ImobiliariaDAO dao;
+	
+	@Autowired
+	private ImobiliariaWS imobiliariaWS;
+	
+	private Logger log = LogManager.getLogger(ImobiliariaTest.class);
+	
+	@Rule
+	public TestName test = new TestName();
+	
 	
 	public static Imobiliaria imobiliaria = new Imobiliaria();
 	private static Imobiliaria imobiliaria2 = new Imobiliaria();
 	
-	private ImobiliariaWS imobiliariaWS;
 	
 	@BeforeClass
 	public static void setup() {
@@ -47,7 +64,7 @@ public class ImobiliariaTest {
 	
 	@Before
 	public void before(){
-		imobiliariaWS = new ImobiliariaWS();
+		log.debug(String.format("Iniciando teste [%s]", test.getMethodName()));
 	}
 	
 	
@@ -85,6 +102,6 @@ public class ImobiliariaTest {
 	
 	@After
 	public void teardown() {
-		imobiliariaWS = null;
+		log.debug(String.format("Finalizando teste [%s]", test.getMethodName()));
 	}
 }

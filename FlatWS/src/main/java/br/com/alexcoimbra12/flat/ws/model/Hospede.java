@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -24,6 +26,14 @@ public class Hospede {
 
 	@Column
 	private String telefone;
+
+	@ManyToOne
+	@JoinColumn(name = "numero_apartamento", nullable = false)
+	private Apartamento apartamento;
+
+	@ManyToOne
+	@JoinColumn(name = "id_imobiliaria", nullable = false)
+	private Imobiliaria imobiliaria;
 
 	public String getNome() {
 		return this.nome;
@@ -53,9 +63,25 @@ public class Hospede {
 		return this.id;
 	}
 
+	public Apartamento getApartamento() {
+		return apartamento;
+	}
+
+	public void setApartamento(Apartamento apartamento) {
+		this.apartamento = apartamento;
+	}
+
+	public Imobiliaria getImobiliaria() {
+		return imobiliaria;
+	}
+
+	public void setImobiliaria(Imobiliaria imobiliaria) {
+		this.imobiliaria = imobiliaria;
+	}
+
 	@Override
 	public String toString() {
 		return "Hospede [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", telefone=" + telefone + "]";
 	}
-	
+
 }

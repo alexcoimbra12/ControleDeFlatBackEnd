@@ -25,6 +25,7 @@ public class HospedeDAOImpl implements HospedeDAO{
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<Hospede> findAll() throws ListException {
 		log.info("Recuperando todos os Hospedes");
 		List<Hospede> hospedeList = entityManager.createQuery("FROM " + Hospede.class.getName()).getResultList();
@@ -67,6 +68,7 @@ public class HospedeDAOImpl implements HospedeDAO{
 	}
 
 	@Override
+	@Transactional
 	public Hospede getById (final int id) throws HospedeNullException {
 		
 		log.info("Recuperando hospede com id " + id);
@@ -99,6 +101,7 @@ public class HospedeDAOImpl implements HospedeDAO{
 		
 		try {
 			log.info("Realizando a operação para deletar o hospede");
+			entityManager.joinTransaction();
 			Hospede hospede = getById(id);
 			entityManager.remove(hospede);
 			log.info("Operação realizada, Hospede com id " + id + " removido");

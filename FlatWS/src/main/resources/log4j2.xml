@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
 	<Appenders>
-		<File name="FILE" fileName="Logs/log.log">
+		<File name="FILE" fileName="C:/Logs/log.log">
 			<PatternLayout pattern="[%d] [%-5level] [%thread] %class.%method\(\) \(%F:%line\)
 					%n%msg%n----------------------------------------------------------------------------------------------------------------%n" />
 		</File>
 
 		<RollingFile name="ROLLING"
-			fileName="Logs/logsroll.log"
-			filePattern="Logs/logsroll-%d{MM-dd-yyyy}-%i.log">
+			fileName="C:/Logs/logsroll.log"
+			filePattern="C:/Logs/logsroll-%d{MM-dd-yyyy}-%i.log">
 			<PatternLayout pattern="[%d] [%-5level] [%thread] %class.%method\(\) \(%F:%line\)
 					%n%msg%n----------------------------------------------------------------------------------------------------------------%n" />
 			<Policies>

@@ -13,6 +13,7 @@ public class WSConstants {
 	
 	public static final String REQUEST_HOSPEDE = "/hospede";
 	public static final String REQUEST_IMOBILIARIA = "/imobiliaria";
+	
 	public static final String VARIABLE_NAME = "nome";
 	public static final String VARIABLE_ID = "id";
 	public static final String PRODUCES_JSON = "application/json";

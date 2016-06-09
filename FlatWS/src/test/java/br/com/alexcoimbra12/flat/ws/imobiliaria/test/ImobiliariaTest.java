@@ -89,7 +89,7 @@ public class ImobiliariaTest {
 	
 	@Test
 	public void deletarImobiliaria() {
-		ResultMessage message = imobiliariaWS.removeById(2);
+		ResultMessage message = imobiliariaWS.removeById(3);
 		assertEquals("success", message.getResultMessage());
 	}
 	

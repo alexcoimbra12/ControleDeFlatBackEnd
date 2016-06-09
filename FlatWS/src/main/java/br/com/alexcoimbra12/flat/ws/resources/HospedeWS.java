@@ -73,6 +73,8 @@ public class HospedeWS {
 			hospede2.setNome(hospede.getNome());
 			hospede2.setCpf(hospede.getCpf());
 			hospede2.setTelefone(hospede.getTelefone());
+			hospede2.setApartamento(hospede.getApartamento());
+			hospede2.setImobiliaria(hospede.getImobiliaria());
 			log.info("Editando o hospede com as novas informações");
 			int result = dao.merge(hospede2);
 

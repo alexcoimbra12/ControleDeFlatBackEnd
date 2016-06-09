@@ -59,6 +59,7 @@ public class HospedeTest {
 
 	@BeforeClass
 	public static void setup() {
+		
 		hospede.setNome("Teste1");
 		hospede.setCpf("111");
 		hospede.setTelefone("1123222");
@@ -77,11 +78,11 @@ public class HospedeTest {
 	@Test
 	public void salvarHospede() throws HospedeNullException, ImobiliariaNullException {
 		
-		apartamento = apartamentoDAO.getById(101);
+		apartamento = apartamentoDAO.getById(103);
 		hospede.setApartamento(apartamento);
 		hospede2.setApartamento(apartamento);
 		
-		imobiliaria = imobiliariaDAO.getById(1);
+		imobiliaria = imobiliariaDAO.getById(2);
 		hospede.setImobiliaria(imobiliaria);
 		hospede2.setImobiliaria(imobiliaria);
 		
@@ -94,10 +95,10 @@ public class HospedeTest {
 	@Test
 	public void editarHospede() throws HospedeNullException, ImobiliariaNullException {
 		Hospede hospede = new Hospede();
-		hospede = dao.getById(9);
+		hospede = dao.getById(1);
 		hospede.setCpf("3232");
 		hospede.setNome("Teste Editar1");
-		imobiliaria = imobiliariaDAO.getById(2);
+		imobiliaria = imobiliariaDAO.getById(1);
 		hospede.setImobiliaria(imobiliaria);
 		
 		ResultMessage message = hospedeWS.editHospede(hospede);
@@ -107,7 +108,7 @@ public class HospedeTest {
 
 	@Test
 	public void deletarHospede() {
-		ResultMessage message = hospedeWS.removeById(2);
+		ResultMessage message = hospedeWS.removeById(4);
 		assertEquals("success", message.getResultMessage());
 	}
 

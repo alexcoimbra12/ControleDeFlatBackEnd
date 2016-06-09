@@ -20,7 +20,7 @@ public class Apartamento {
 	@Column(name = "numero_apto", nullable = false)
 	private int numeroApto;
 
-	@OneToMany(mappedBy = "apartamento", targetEntity = Hospede.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "apartamento", targetEntity = Hospede.class, fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
 	@JsonBackReference
 	private List<Hospede> hospedeList;
 

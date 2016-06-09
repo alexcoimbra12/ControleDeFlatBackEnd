@@ -101,7 +101,6 @@ public class HospedeDAOImpl implements HospedeDAO{
 		
 		try {
 			log.info("Realizando a operação para deletar o hospede");
-			entityManager.joinTransaction();
 			Hospede hospede = getById(id);
 			entityManager.remove(hospede);
 			log.info("Operação realizada, Hospede com id " + id + " removido");
